@@ -1,0 +1,22 @@
+server:
+  port: 5002
+  # By default, Spring Boot doesn't include an error message in the JSON response
+  # when the ResponseStatusException is thrown in the controller. This setting
+  # includes the error description argument given to the ResponseStatusException
+  # constructor. It can be found in the "message" property of the JSON response.
+  error:
+    include-message: always
+
+# Name of the application is used during client registration for Eureka
+# server and in communication between services to avoid specifying the host
+# information so that the service can be addressed using http://SERVICE-NAME
+# instead of http://localhost:PORT-NUMBER.
+spring:
+  application:
+    name: MICROTASKS-USER-SERVICE
+
+# Location of the Eureka service registry server
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

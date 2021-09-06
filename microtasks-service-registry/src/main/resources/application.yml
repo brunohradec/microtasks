@@ -1,0 +1,9 @@
+server:
+  port: 8761
+
+# This is a Eureka server, and not a eureka client, so it does not
+# need to register with another Eureka server.
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
