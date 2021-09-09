@@ -29,3 +29,8 @@ spring:
             allowedMethods: "*"
             allowedHeaders: "*"
         add-to-simple-url-handler-mapping: true
+
+# Gateway logs to a log file
+logging:
+  file:
+    name: ./log/log.txt
