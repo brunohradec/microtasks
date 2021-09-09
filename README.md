@@ -18,7 +18,7 @@ requests if the requested service is unavailable. URL-s that the circuit
 breaker redirects to if the requested service is unavailable are defined
 in the `ApiGatewayFallbackController` class. The requested service 
 is considered unavailable if the service does not respond in 10 seconds
-(HTTP status REQUEST_TIMEOUT and response with the error message description
+(HTTP status `REQUEST_TIMEOUT` and response with the error message description
 is returned). Circuit breaker is implemented using Resilience4j which is a part of
 [Spring Cloud Circuit Breaker](https://spring.io/projects/spring-cloud-circuitbreaker).
 
@@ -26,7 +26,7 @@ is returned). Circuit breaker is implemented using Resilience4j which is a part 
 
 Look at the REST API Description for each service and replace the port number
 with `5050`. If the service can't be reached, object containing the error
-description message is returned with the status REQUEST_TIMEOUT.
+description message is returned with the status `REQUEST_TIMEOUT`.
 
 ## Microtasks Service Registry 
 
@@ -36,6 +36,13 @@ a name assigned to them, so they don't have to be addressed by IP addresses
 and port numbers. It is configured to run on port `8761`. Service registry is 
 implemented using Netflix Eureka Server which is a part of 
 [Spring Cloud Discovery](https://spring.io/guides/gs/service-registration-and-discovery/)
+
+## Distributed logging
+
+All services use [Spring Cloud Sleuth](https://spring.io/projects/spring-cloud-sleuth)
+and Spring Cloud Zipkin for distributed logging. Logs are sent to Zipkin server that
+is expected to run on port `9411`. More about running Zipkin server can be found in 
+the [Zipkin quickstart guide](https://zipkin.io/pages/quickstart.html).
 
 ## Microtasks Team Service
 
