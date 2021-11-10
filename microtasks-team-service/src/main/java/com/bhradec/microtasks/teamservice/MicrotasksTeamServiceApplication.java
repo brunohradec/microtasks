@@ -10,13 +10,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 @SpringBootApplication
 @EnableDiscoveryClient
 public class MicrotasksTeamServiceApplication {
-	@Bean
-	@LoadBalanced
-	public WebClient.Builder webClientBuilder() {
-		return WebClient.builder();
-	}
+    @Bean
+    @LoadBalanced
+    public WebClient.Builder webClientBuilder() {
+        return WebClient.builder();
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(MicrotasksTeamServiceApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MicrotasksTeamServiceApplication.class, args);
+    }
 }

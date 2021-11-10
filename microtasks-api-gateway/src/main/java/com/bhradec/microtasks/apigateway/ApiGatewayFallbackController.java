@@ -10,25 +10,16 @@ import org.springframework.web.server.ResponseStatusException;
 public class ApiGatewayFallbackController {
     @RequestMapping("teamServiceFallback")
     public void teamFallback() {
-        throw new ResponseStatusException(
-                HttpStatus.REQUEST_TIMEOUT,
-                "Team service does not respond"
-        );
+        throw new ResponseStatusException(HttpStatus.REQUEST_TIMEOUT, "Team service does not respond");
     }
 
     @RequestMapping("userServiceFallback")
     public void userFallback() {
-        throw new ResponseStatusException(
-                HttpStatus.REQUEST_TIMEOUT,
-                "User service does not respond"
-        );
+        throw new ResponseStatusException(HttpStatus.REQUEST_TIMEOUT, "User service does not respond");
     }
 
     @RequestMapping("taskServiceFallback")
     public void taskFallback() {
-        throw new ResponseStatusException(
-                HttpStatus.REQUEST_TIMEOUT,
-                "Task service does not respond"
-        );
+        throw new ResponseStatusException(HttpStatus.REQUEST_TIMEOUT, "Task service does not respond");
     }
 }
