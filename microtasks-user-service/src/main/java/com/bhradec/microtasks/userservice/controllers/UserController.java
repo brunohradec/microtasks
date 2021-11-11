@@ -44,7 +44,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("{username}/verify")
+    @PostMapping("{username}/verify-password")
     public ResponseEntity<Boolean> verifyUserPasswordByUsername(
             @PathVariable String username,
             @RequestBody String password) {

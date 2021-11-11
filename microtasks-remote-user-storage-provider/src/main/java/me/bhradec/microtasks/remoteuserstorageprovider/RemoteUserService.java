@@ -12,6 +12,6 @@ public interface RemoteUserService {
     UserDto getUserByUsername(@PathParam("username") String username);
 
     @POST
-    @Path("/{username}/verify")
-    Boolean verifyUserPasswordByUsername(@PathParam("username") String username);
+    @Path("/{username}/verify-password")
+    Boolean verifyUserPasswordByUsername(@PathParam("username") String username, String password);
 }
