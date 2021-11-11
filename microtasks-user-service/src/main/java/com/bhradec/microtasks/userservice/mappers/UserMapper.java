@@ -14,6 +14,7 @@ public class UserMapper {
                 .lastName(userCommandDto.getLastName())
                 .username(userCommandDto.getUsername())
                 .email(userCommandDto.getEmail())
+                .password(userCommandDto.getPassword())
                 .teamId(userCommandDto.getTeamId())
                 .build();
     }

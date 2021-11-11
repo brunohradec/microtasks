@@ -31,6 +31,10 @@ public class UserCommandDto {
     @Email(message = "Email must be a valid email adress")
     private String email;
 
+    @NotNull(message = "Password must not be null")
+    @NotBlank(message = "Password must not be blank or empty")
+    private String password;
+
     @NotNull(message = "Team id must not be null")
     private Long teamId;
 }
