@@ -1,0 +1,26 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.6'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'me.bhradec'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.keycloak:keycloak-core:15.0.2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	compileOnly 'org.keycloak:keycloak-server-spi:15.0.2'
+	compileOnly 'org.keycloak:keycloak-services:15.0.2'
+	compileOnly 'org.projectlombok:lombok'
+}
+
+test {
+	useJUnitPlatform()
+}

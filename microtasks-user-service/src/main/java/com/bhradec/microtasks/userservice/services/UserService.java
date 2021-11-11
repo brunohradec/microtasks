@@ -8,7 +8,8 @@ import com.bhradec.microtasks.userservice.exceptions.NotFoundException;
 import com.bhradec.microtasks.userservice.mappers.UserMapper;
 import com.bhradec.microtasks.userservice.repositories.UserRepository;
 import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreaker;
-import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreakerFactory;
+import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreakerFactory;;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -22,17 +23,20 @@ public class UserService {
     private final UserMapper userMapper;
     private final WebClient webClient;
     private final ReactiveCircuitBreaker reactiveCircuitBreaker;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public UserService(
             UserRepository userRepository,
             UserMapper userMapper,
             WebClient.Builder webClientBuilder,
-            ReactiveCircuitBreakerFactory reactiveCircuitBreakerFactory) {
+            ReactiveCircuitBreakerFactory reactiveCircuitBreakerFactory,
+            BCryptPasswordEncoder bCryptPasswordEncoder) {
 
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.webClient = webClientBuilder.baseUrl("lb://MICROTASKS-TEAM-SERVICE").build();
         this.reactiveCircuitBreaker = reactiveCircuitBreakerFactory.create("teamServiceCircuitBreaker");
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     private Optional<Boolean> teamExistsById(Long id) {
@@ -73,6 +77,17 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public Boolean verifyUserPasswordByUsername(String username, String password) throws NotFoundException {
+        User foundUser = findByUsername(username)
+                .orElseThrow(() -> new NotFoundException("User with the provided username not found"));
+
+        if (bCryptPasswordEncoder.matches(password, foundUser.getPassword())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public List<User> findAll() {
         return userRepository.findAll();
     }
@@ -87,6 +102,10 @@ public class UserService {
 
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
+    }
+
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findFirstByUsername(username);
     }
 
     public User updateById(Long id, UserCommandDto userCommandDto) throws

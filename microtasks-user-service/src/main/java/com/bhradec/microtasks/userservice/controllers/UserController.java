@@ -1,5 +1,6 @@
 package com.bhradec.microtasks.userservice.controllers;
 
+import com.bhradec.microtasks.userservice.domain.User;
 import com.bhradec.microtasks.userservice.dtos.UserCommandDto;
 import com.bhradec.microtasks.userservice.dtos.UserDto;
 import com.bhradec.microtasks.userservice.exceptions.ConflictException;
@@ -7,6 +8,7 @@ import com.bhradec.microtasks.userservice.exceptions.DoesNotRespondException;
 import com.bhradec.microtasks.userservice.exceptions.NotFoundException;
 import com.bhradec.microtasks.userservice.mappers.UserMapper;
 import com.bhradec.microtasks.userservice.services.UserService;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +44,20 @@ public class UserController {
         }
     }
 
+    @PostMapping("{username}/verify")
+    public ResponseEntity<Boolean> verifyUserPasswordByUsername(
+            @PathVariable String username,
+            @RequestBody String password) {
+
+        try {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(userService.verifyUserPasswordByUsername(username, password));
+        } catch (NotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
+        }
+    }
+
     @GetMapping
     public ResponseEntity<List<UserDto>> findAll() {
         return ResponseEntity
@@ -72,6 +88,18 @@ public class UserController {
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
                         "User with the provided id not found"));
+
+        return ResponseEntity.status(HttpStatus.OK).body(foundUserDto);
+    }
+
+    @GetMapping(params = {"username"})
+    public ResponseEntity<UserDto> findByUsername(@RequestParam String username) {
+        UserDto foundUserDto = userService
+                .findByUsername(username)
+                .map(userMapper::mapUserToDto)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "User with the provided username not found"));
 
         return ResponseEntity.status(HttpStatus.OK).body(foundUserDto);
     }
