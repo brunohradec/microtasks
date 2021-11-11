@@ -42,21 +42,21 @@ public class MicrotasksApiGatewayApplication {
         return builder
                 .routes()
                 .route((predicateSpec) -> predicateSpec
-                        .path("/team/**")
+                        .path("/teams/**")
                         .filters((gatewayFilterSpec) -> gatewayFilterSpec
                                 .circuitBreaker((config) -> config
                                         .setName("defaultCircuitBreaker")
                                         .setFallbackUri("forward:/api-gateway-fallback/teamServiceFallback")))
                         .uri("lb://MICROTASKS-TEAM-SERVICE"))
                 .route((predicateSpec) -> predicateSpec
-                        .path("/user/**")
+                        .path("/users/**")
                         .filters((gatewayFilterSpec) -> gatewayFilterSpec
                                 .circuitBreaker((config) -> config
                                         .setName("defaultCircuitBreaker")
                                         .setFallbackUri("forward:/api-gateway-fallback/userServiceFallback")))
                         .uri("lb://MICROTASKS-USER-SERVICE"))
                 .route((predicateSpec) -> predicateSpec
-                        .path("/task/**")
+                        .path("/tasks/**")
                         .filters((gatewayFilterSpec) -> gatewayFilterSpec
                                 .circuitBreaker((config) -> config
                                         .setName("defaultCircuitBreaker")
